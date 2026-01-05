@@ -1,0 +1,79 @@
+{
+  "workouts": [
+    {
+      "name": "morning",
+      "exercises": [
+        {
+          "video_path": "data/gallery\\planka.mp4",
+          "duration": 5
+        },
+        {
+          "video_path": "data/gallery\\pushups.mp4",
+          "duration": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "test",
+      "exercises": [
+        {
+          "video_path": "data/gallery\\planka.mp4",
+          "duration": 120
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "fgsdfh",
+      "exercises": [
+        {
+          "video_path": "data/gallery\\Download (1).mp4",
+          "duration": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "name": "",
+      "exercises": [
+        {
+          "video_path": "data/gallery\\Download (1).mp4",
+          "duration": 60
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ]
+}

@@ -8,14 +8,14 @@ from models import DataManager
 
 
 class SettingsView(ctk.CTkFrame):
-    """Application settings view"""
+    #Application settings view
 
     def __init__(self, master):
         super().__init__(master)
 
-        self.master_window = master
-        self.data_manager = DataManager()
-        self.settings = self.data_manager.load_settings()
+        self.master_window = master  # Reference to main
+        self.data_manager = DataManager()  # Data manager instance
+        self.settings = self.data_manager.load_settings()  # Load current settings
 
         # Title
         label = ctk.CTkLabel(
@@ -30,11 +30,10 @@ class SettingsView(ctk.CTkFrame):
         settings_container.pack(fill="both", expand=True, padx=50, pady=20)
 
         # Theme setting
-        self.create_theme_setting(settings_container)
+        self.create_theme_setting(settings_container)  # Create theme controls
 
     def create_theme_setting(self, container):
-        """Create theme setting"""
-        # Frame for setting
+        #Create theme setting
         theme_frame = ctk.CTkFrame(container)
         theme_frame.pack(fill="x", pady=20, padx=20)
 
@@ -51,7 +50,7 @@ class SettingsView(ctk.CTkFrame):
             theme_frame,
             text="Choose light or dark theme for the application",
             font=ctk.CTkFont(size=12),
-            text_color="gray"
+            text_color="gray"  # Gray text
         )
         desc_label.pack(anchor="w", padx=20, pady=(0, 20))
 
@@ -68,24 +67,24 @@ class SettingsView(ctk.CTkFrame):
         light_label.pack(side="left", padx=(0, 20))
 
         # Switch
-        current_theme = self.settings.get("theme", "dark")
-        switch_var = ctk.StringVar(value=current_theme)
+        current_theme = self.settings.get("theme", "dark")  # Get saved theme
+        switch_var = ctk.StringVar(value=current_theme)  # Variable for switch
 
         self.theme_switch = ctk.CTkSwitch(
             switch_container,
             text="",
-            variable=switch_var,
-            onvalue="dark",
-            offvalue="light",
-            command=self.toggle_theme
+            variable=switch_var,  # Bind to variable
+            onvalue="dark",  # Value when on
+            offvalue="light",  # Value when off
+            command=self.toggle_theme  # Toggle function
         )
         self.theme_switch.pack(side="left")
 
         # Set correct state
-        if current_theme == "dark":
-            self.theme_switch.select()
+        if current_theme == "dark":  # If dark theme
+            self.theme_switch.select()  # Switch on
         else:
-            self.theme_switch.deselect()
+            self.theme_switch.deselect()  # Switch off
 
         # "Dark" label
         dark_label = ctk.CTkLabel(
@@ -95,7 +94,7 @@ class SettingsView(ctk.CTkFrame):
         )
         dark_label.pack(side="left", padx=(20, 0))
 
-        # Info message - UPDATED TEXT
+        # Info message
         info_frame = ctk.CTkFrame(theme_frame, fg_color="gray25")
         info_frame.pack(fill="x", padx=20, pady=(0, 20))
 
@@ -103,21 +102,21 @@ class SettingsView(ctk.CTkFrame):
             info_frame,
             text="ℹ️ Changes will take effect after restarting the application",
             font=ctk.CTkFont(size=12),
-            anchor="w"
+            anchor="w"  # Left align
         )
         info_label.pack(padx=15, pady=15, anchor="w")
 
     def toggle_theme(self):
-        """Toggle theme"""
+        #Toggle theme
         # Get current saved theme
-        current_theme = self.settings.get("theme", "dark")
+        current_theme = self.settings.get("theme", "dark")  # Current theme
 
         # Toggle to opposite theme
-        new_theme = "light" if current_theme == "dark" else "dark"
+        new_theme = "light" if current_theme == "dark" else "dark"  # Switch theme
 
         # DEBUG: Show what's happening
-        print(f"Current: {current_theme}, Switching to: {new_theme}")
+        print(f"Current: {current_theme}, Switching to: {new_theme}")  # Debug output
 
         # Save to settings
-        self.settings["theme"] = new_theme
-        self.data_manager.save_settings(self.settings)
+        self.settings["theme"] = new_theme  # Update settings
+        self.data_manager.save_settings(self.settings)  # Save to file

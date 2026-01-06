@@ -14,7 +14,7 @@ from utils import seconds_to_mmss, generate_video_thumbnail
 
 
 class WorkoutPlayer(ctk.CTkToplevel):
-    """Workout playback window"""
+    # Workout playback window
 
     def __init__(self, master, workout):
         super().__init__(master)
@@ -28,9 +28,9 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.is_fullscreen = False
         self.is_resting = False  # Flag for rest period
         self.current_exercise_index = 0
-        self.current_time = 0  # current exercise time in seconds
-        self.total_elapsed = 0  # total workout elapsed time
-        self.session_id = None
+        self.current_time = 0  # Current exercise time in seconds
+        self.total_elapsed = 0  # Total workout elapsed time
+        self.session_id = None  # DB session ID
         self.session_start_time = None
 
         # Get list of non-empty exercises
@@ -59,7 +59,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.start_workout()
 
     def create_ui(self):
-        """Create player interface"""
+        # Create player interface
         # Top panel with info
         self.create_top_panel()
 
@@ -89,7 +89,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.create_control_panel()
 
     def create_top_panel(self):
-        """Create top panel"""
+        # Create top panel
         top_panel = ctk.CTkFrame(self, height=60)
         top_panel.pack(fill="x", padx=10, pady=(10, 0))
         top_panel.pack_propagate(False)
@@ -112,7 +112,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.total_timer_label.pack(side="right", padx=20)
 
     def create_control_panel(self):
-        """Create control panel"""
+        # Create control panel
         control_panel = ctk.CTkFrame(self, height=80)
         control_panel.pack(fill="x", padx=10, pady=10)
         control_panel.pack_propagate(False)
@@ -139,7 +139,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.fullscreen_btn.pack(side="right", padx=20)
 
     def start_workout(self):
-        """Start workout"""
+        # Start workout
         # Record start in DB
         workout_name = self.workout.name if self.workout.name else "Untitled"
         self.session_start_time = datetime.now()
@@ -154,7 +154,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.load_exercise(0)
 
     def load_exercise(self, index):
-        """Load exercise by index"""
+        # Load exercise by index
         if index >= len(self.exercises):
             # Workout completed
             self.finish_workout(completed=True)
@@ -187,20 +187,20 @@ class WorkoutPlayer(ctk.CTkToplevel):
         # Get FPS
         self.fps = self.video_capture.get(cv2.CAP_PROP_FPS)
         if self.fps == 0:
-            self.fps = 30  # default
+            self.fps = 30  # Default
 
         # Start playback if not paused
         if self.is_playing and not self.is_paused:
             self.start_video_playback()
 
     def start_video_playback(self):
-        """Start video playback"""
+        # Start video playback
         self.stop_video_thread = False
         self.video_thread = threading.Thread(target=self.video_loop, daemon=True)
         self.video_thread.start()
 
     def video_loop(self):
-        """Video playback loop"""
+        # Video playback loop
         exercise = self.exercises[self.current_exercise_index]
         duration = exercise.duration
 
@@ -237,7 +237,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             self.after(0, self.on_exercise_complete)
 
     def display_frame(self, frame):
-        """Display frame on canvas"""
+        # Display frame on canvas
         try:
             # Check if canvas still exists
             if not self.video_canvas.winfo_exists():
@@ -272,7 +272,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             pass
 
     def update_timers(self):
-        """Update timers"""
+        # Update timers
         try:
             # Check if widgets still exist
             if not self.exercise_timer_label.winfo_exists() or not self.total_timer_label.winfo_exists():
@@ -293,7 +293,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             pass
 
     def on_exercise_complete(self):
-        """Exercise completion handler"""
+        # Exercise completion handler
         # Stop video capture (but don't join thread - we're in it!)
         self.stop_video_thread = True
         if self.video_capture:
@@ -309,7 +309,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             self.finish_workout(completed=True)
 
     def show_rest_period(self):
-        """Show 10-second rest period with preview"""
+        # Show 10-second rest period with preview
         # Set resting flag
         self.is_resting = True
 
@@ -351,7 +351,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
         self.rest_countdown(10)
 
     def rest_countdown(self, seconds):
-        """Rest period countdown"""
+        # Rest period countdown
         # Check if window still exists
         try:
             if not self.winfo_exists():
@@ -379,11 +379,11 @@ class WorkoutPlayer(ctk.CTkToplevel):
             self.next_exercise()
 
     def next_exercise(self):
-        """Move to next exercise"""
+        # Move to next exercise
         self.load_exercise(self.current_exercise_index + 1)
 
     def toggle_play_pause(self):
-        """Toggle play/pause"""
+        # Toggle play/pause
         if not self.is_playing:
             # First start
             self.is_playing = True
@@ -404,7 +404,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
                     self.start_video_playback()
 
     def toggle_fullscreen(self):
-        """Toggle fullscreen mode"""
+        # Toggle fullscreen mode
         self.is_fullscreen = not self.is_fullscreen
         self.attributes("-fullscreen", self.is_fullscreen)
 
@@ -414,7 +414,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             self.fullscreen_btn.configure(text="⛶ Fullscreen")
 
     def finish_workout(self, completed=True):
-        #Finish workout
+        # Finish workout
         # Stop video
         self.stop_video_thread = True
         if self.video_capture:
@@ -450,7 +450,7 @@ class WorkoutPlayer(ctk.CTkToplevel):
             pass
 
     def on_close(self):
-        #Window close handler
+        # Window close handler
         # Stop video
         self.stop_video_thread = True
         self.is_resting = False  # Stop rest countdown

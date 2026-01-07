@@ -10,7 +10,7 @@ import threading
 import time
 from datetime import datetime
 from models import Database
-from utils import seconds_to_mmss, generate_video_thumbnail
+from utils import seconds_to_mmss, generate_video_prev
 
 
 class WorkoutPlayer(ctk.CTkToplevel):
@@ -321,9 +321,9 @@ class WorkoutPlayer(ctk.CTkToplevel):
 
         # Show preview
         try:
-            thumbnail = generate_video_thumbnail(next_exercise.video_path, size=(400, 300))
-            if thumbnail:
-                photo = ImageTk.PhotoImage(thumbnail)
+            prev = generate_video_prev(next_exercise.video_path, size=(400, 300))
+            if prev:
+                photo = ImageTk.PhotoImage(prev)
 
                 canvas_width = self.video_canvas.winfo_width()
                 canvas_height = self.video_canvas.winfo_height()

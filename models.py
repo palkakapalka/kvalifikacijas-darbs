@@ -73,8 +73,7 @@ class Workout:
 class DataManager:
     #Application data management (JSON)
 
-    def __init__(self, workouts_file="data/workouts.json",
-                 settings_file="data/settings.json"):
+    def __init__(self, workouts_file="data/workouts.json", settings_file="data/settings.json"):
         self.workouts_file = workouts_file  # Workouts JSON path
         self.settings_file = settings_file  # Settings JSON path
         self._ensure_files_exist()  # Create if missing

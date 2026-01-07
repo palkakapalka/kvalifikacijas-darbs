@@ -74,6 +74,24 @@
         null,
         null
       ]
+    },
+    {
+      "name": "",
+      "exercises": [
+        {
+          "video_path": "data/gallery\\Download (1).mp4",
+          "duration": 10
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
     }
   ]
 }
